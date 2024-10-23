@@ -156,7 +156,7 @@ export default function Dashboard() {
 
       {showPricing && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <div className="bg-[#1a1a1a] rounded-lg p-4 w-full max-w-3xl relative">
+          <div className="bg-[#1a1a1a] rounded-lg p-4 w-full relative">
             <Button
               onClick={() => setShowPricing(false)}
               className="absolute top-2 right-2 bolt-button"
