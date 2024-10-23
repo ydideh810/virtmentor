@@ -26,7 +26,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/vm.ico" type="image/x-icon" />
         <title>Virtual Mentor - Skill Development RAG Agent</title>
-        <meta name="description" content={metadata.description} />
+        <meta name="description" content="Personalized learning paths and weekly goals for skill development" />
       </head>
       <body>
         <ErrorBoundary FallbackComponent={Error}>
