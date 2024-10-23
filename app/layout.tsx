@@ -23,6 +23,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={tektur.variable}>
+      <head>
+        <link rel="icon" href="/vm.ico" type="image/x-icon" />
+        <title>{metadata.title}</title>
+        <meta name="description" content={metadata.description} />
+      </head>
       <body>
         <ErrorBoundary FallbackComponent={Error}>
           {children}
