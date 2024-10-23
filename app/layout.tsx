@@ -25,7 +25,7 @@ export default function RootLayout({
     <html lang="en" className={tektur.variable}>
       <head>
         <link rel="icon" href="/vm.ico" type="image/x-icon" />
-        <title>{metadata.title}</title>
+        <title>Virtual Mentor - Skill Development RAG Agent</title>
         <meta name="description" content={metadata.description} />
       </head>
       <body>
