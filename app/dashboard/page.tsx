@@ -31,7 +31,8 @@ import {
   saveWeeklyGoals,
   saveMonthlyGoals,
   saveYearlyGoals,
-  updateUserCreditsInIndexedDB, // Function to update credits in IndexedDB
+  updateUserCreditsInIndexedDB,  // Updated import
+  getUserCredits,       // Function to update credits in IndexedDB
 } from '@/lib/indexeddb';
 import { Download, Sparkles } from 'lucide-react';
 import { useGenerations } from '@/lib/generations';
@@ -69,8 +70,7 @@ export default function Dashboard() {
     };
   }, []);
 
-  // Check for credits in the URL after successful Stripe payment
-  useEffect(() => {
+   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const success = urlParams.get('success');
     const purchasedCredits = urlParams.get('limit');
@@ -78,9 +78,8 @@ export default function Dashboard() {
     if (success === 'true' && purchasedCredits) {
       // Update user's credits in IndexedDB
       const creditsToAdd = parseInt(purchasedCredits, 10);
-      const userEmail = "user@example.com"; // Replace with actual user email logic
       
-      updateUserCreditsInIndexedDB(userEmail, creditsToAdd).then(() => {
+      updateUserCreditsInIndexedDB(creditsToAdd).then(() => {
         // Update the state with the new number of generations
         setGenerationsLeft((prev) => prev + creditsToAdd);
         toast({
