@@ -95,15 +95,6 @@ export default function Dashboard() {
     variant: 'destructive',
   });
 });
-        });
-      }).catch((error) => {
-        console.error('Failed to update credits in IndexedDB:', error);
-        toast({
-          title: 'Error',
-          description: 'Failed to update your credits. Please contact support.',
-          variant: 'destructive',
-        });
-      });
     }
   }, [addGenerations, toast]);
 
