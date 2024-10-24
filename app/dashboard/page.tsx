@@ -55,7 +55,7 @@ export default function Dashboard() {
   const [generatedContent, setGeneratedContent] = useState('');
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  const { generationsLeft, useGeneration, setGenerationsLeft } = useGenerations(); // Added setGenerationsLeft
+  const { generationsLeft, useGeneration, addGenerations } = useGenerations(); // Added setGenerationsLeft
   const [showPricing, setShowPricing] = useState(false);
 
   useEffect(() => {
@@ -95,7 +95,7 @@ export default function Dashboard() {
         });
       });
     }
-  }, [setGenerationsLeft, toast]);
+  }, [addGenerations, toast]);
 
   const handleGenerate = async () => {
     if (!skill || !experience) {
