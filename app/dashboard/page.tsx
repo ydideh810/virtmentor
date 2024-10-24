@@ -31,6 +31,7 @@ import {
   saveWeeklyGoals,
   saveMonthlyGoals,
   saveYearlyGoals,
+  updateUserCreditsInIndexedDB, // Function to update credits in IndexedDB
 } from '@/lib/indexeddb';
 import { Download, Sparkles } from 'lucide-react';
 import { useGenerations } from '@/lib/generations';
@@ -53,7 +54,7 @@ export default function Dashboard() {
   const [generatedContent, setGeneratedContent] = useState('');
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  const { generationsLeft, useGeneration } = useGenerations();
+  const { generationsLeft, useGeneration, setGenerationsLeft } = useGenerations(); // Added setGenerationsLeft
   const [showPricing, setShowPricing] = useState(false);
 
   useEffect(() => {
@@ -67,6 +68,35 @@ export default function Dashboard() {
       document.body.removeChild(script);
     };
   }, []);
+
+  // Check for credits in the URL after successful Stripe payment
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const success = urlParams.get('success');
+    const purchasedCredits = urlParams.get('limit');
+
+    if (success === 'true' && purchasedCredits) {
+      // Update user's credits in IndexedDB
+      const creditsToAdd = parseInt(purchasedCredits, 10);
+      const userEmail = "user@example.com"; // Replace with actual user email logic
+      
+      updateUserCreditsInIndexedDB(userEmail, creditsToAdd).then(() => {
+        // Update the state with the new number of generations
+        setGenerationsLeft((prev) => prev + creditsToAdd);
+        toast({
+          title: 'Credits Added',
+          description: `You have successfully purchased ${creditsToAdd} generations.`,
+        });
+      }).catch((error) => {
+        console.error('Failed to update credits in IndexedDB:', error);
+        toast({
+          title: 'Error',
+          description: 'Failed to update your credits. Please contact support.',
+          variant: 'destructive',
+        });
+      });
+    }
+  }, [setGenerationsLeft, toast]);
 
   const handleGenerate = async () => {
     if (!skill || !experience) {
