@@ -80,11 +80,21 @@ export default function Dashboard() {
       const creditsToAdd = parseInt(purchasedCredits, 10);
       
       updateUserCreditsInIndexedDB(creditsToAdd).then(() => {
-        // Update the state with the new number of generations
-        addGenerations((prev) => prev + creditsToAdd);
-        toast({
-          title: 'Credits Added',
-          description: `You have successfully purchased ${creditsToAdd} generations.`,
+  // Update the state with the new number of generations
+  addGenerations(generationsLeft + creditsToAdd); // Add creditsToAdd to the current generationsLeft
+
+  toast({
+    title: 'Credits Added',
+    description: `You have successfully purchased ${creditsToAdd} generations.`,
+  });
+}).catch((error) => {
+  console.error('Failed to update credits in IndexedDB:', error);
+  toast({
+    title: 'Error',
+    description: 'Failed to update your credits. Please contact support.',
+    variant: 'destructive',
+  });
+});
         });
       }).catch((error) => {
         console.error('Failed to update credits in IndexedDB:', error);
