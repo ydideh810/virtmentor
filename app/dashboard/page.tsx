@@ -81,7 +81,7 @@ export default function Dashboard() {
       
       updateUserCreditsInIndexedDB(creditsToAdd).then(() => {
         // Update the state with the new number of generations
-        setGenerationsLeft((prev) => prev + creditsToAdd);
+        addGenerations((prev) => prev + creditsToAdd);
         toast({
           title: 'Credits Added',
           description: `You have successfully purchased ${creditsToAdd} generations.`,
